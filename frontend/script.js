@@ -76,3 +76,69 @@ function escapeHtml(str) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 }
+
+
+//     Forms  : Create , Update , Delete  
+
+function setupForms() {
+    setupCreateForm();
+    setupUpdateForm();
+    setupDeleteForm();
+}
+
+
+function setupCreateForm() {
+    const form = document.getElementById("create-form");
+    const status = document.getElementById("create-status");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (status) {
+            status.textContent = "Creating...";
+            status.className = "status";
+        }
+
+        const nameInput = document.getElementById("create-name");
+        const priceInput = document.getElementById("create-price");
+
+        const name = nameInput.value.trim();
+        const priceValue = priceInput.value.trim();
+
+        if(!name || !priceValue) {
+            if (status) {
+                status.textContent = "Please enter both name and price";
+                status.classList.add("error");
+            }
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("name", name);
+        formData.append("price", priceValue);
+        
+        try {
+            const res = await fetch(`${BASE_URL_URL}/create`, {
+                method:     "POST",
+                body: formData,
+            });
+
+            if (!res.ok) {
+                throw new Error(`HTTP error ${res.status}`);
+            }
+
+            if (status) {
+                status.textContent = "Medicine created successfully!";
+                status.classList.add("success");
+            }
+            form.reset();
+            fetchMedicines();
+        }   catch (err) {
+            console.error("Error creating medicine;", err);
+            if (status) {
+                status.textContent = "Failed to create medicine.";
+                status.classList.add("error");
+            }
+        }
+    });
+}
