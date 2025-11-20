@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const BASE_URL_URL = "http://localhost:8000";
 
 document.addEventListener("DOMContentLoaded", () => {
     fetchMedicines();
@@ -11,7 +11,7 @@ async function fetchMedicines() {
     const container = document.getElementById("medicines-container");
     
     try{
-        const res = await fetch(`${BASE_URL}/medicines`);
+        const res = await fetch(`${BASE_URL_URL}/medicines`);
         if(!res.ok) {
             throw new Error(`HTTP error ${res.status}`);
         }
@@ -60,10 +60,19 @@ function renderMedicines(medicines) {
         <div class="med-header">
         <h3>${escapeHtml(name)}</h3>
         <span class="pill pill-index">#${index + 1}</span>
-        </dic>
+        </div>
         <p class="med-price"><strong>Price:</strong> ${priceText}</p>
         `;
 
         container.appendChild(card);
     });
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
