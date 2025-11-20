@@ -3,18 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Medicine Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="disclaimer" id="disclaimer">
         Disclaimer: All medicine names and prices used in this application are fictional and do not represent any real medicine(s).
     </div>
-    <header>
-        <h1>Medicine Tracker</h1>
-    </header>
-    <main>
 
+    <div class = "app-shell">
+        <header class = "app-header">
+            <div>
+                <h1>Medicine Tracker</h1>
+            </div>
+        </header>
+
+        <main class="container main-content">
+            <div class="content-grid">
+                <div class="forms-section">
+
+                    <!-- CRUD operations ( Create, Update , Delete ) -->
+
+                    <section class="card card-form">
+                        <div class="card-header">
+                            <h2>Add New Medicine</h2>
+                            <p class="card-subtitle"> Create a new entry with name and price.</p>
+                        </div>
+                        <form id="create-form" class="form">
+                            <div class="form-group">
+                                <label for="create-name">Medicine Name</label>
+                                <input type="text" id="create-name" name="name" placeholder="e.g Aspirin" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="create-price">Price (£)</label>
+                                <input type="number" id="create-price" name="price" placeholder="e.g 9.99" required step="0.01" min="0">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Medicine</button>
+                            <div id="create-status" class="status-message"></div>
+                        </form>
+                    </section>
+
+                    <section class="card card-form">
+                        <div class="card-header">
+                            <h2>Update Medicine</h2>
+                            <p class="card-subtitle">Adjust the price of an existing medicine</p>
+                        </div>
+                        <form id="update-form" class="form">
+                            <div class="form-group">
+                                <label for="update-name">Medicine name</label>
+                                <input type="text" id="update-name" name="name" placeholder="Exact name as in inventory" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="update-price">New price (£)</label>
+                                <input type="number" id="update-price" name="price" step="0.01" min="0" placeholder="e.g. 12.50" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update price</button>
+                            <div id="update-status" class="status-message"></div>
+                        </form>
+                    </section>
+
+                    <section class="card card-form">
+                        <div class="card-header">
+                            <h2>Delete Medicine</h2>
+                            <p class="card-subtitle">Remove a medicine from your inventory</p>
+                        </div>
+                        <form id="delete-form" class="form">
+                            <div class="form-group">
+                                <label for="delete-name">Medicine name</label>
+                                <input type="text" id="delete-name" name="name" placeholder="Exact name as in inventory" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Delete medicine</button>
+                            <div id="delete-status" class="status-message"></div>
+                        </form>
+                    </section>
+
+
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+
+        
     </main>
     <script src="script.js"></script>
 </body>
