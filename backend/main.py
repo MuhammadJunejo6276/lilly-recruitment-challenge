@@ -21,6 +21,7 @@ Run this module directly to start the FastAPI application.
 """
 import uvicorn
 import json
+import os
 
 app = FastAPI()
 
@@ -31,6 +32,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def get_data_path ():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(current_dir, 'data.json')
+    return data_path
+
+@app.get("/")
+def read_root():
+    return {"message": "Medicine API is ruuning"}
+
 
 @app.get("/medicines")
 def get_all_meds():
