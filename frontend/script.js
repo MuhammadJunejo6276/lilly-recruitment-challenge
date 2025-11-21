@@ -87,6 +87,20 @@ function setupForms() {
     setupAverageButton();
 }
 
+// Check if medicines already exists in inventory
+
+function medicineExists(name) {
+    const cards = document.querySelectorAll(".medicine-card h3");
+    name = name.toLowerCase().trim();
+
+    for (let card of cards) {
+        if (card.textContent.toLowerCase().trim() === name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 
 function setupCreateForm() {
     const form = document.getElementById("create-form");
@@ -111,6 +125,14 @@ function setupCreateForm() {
                 status.textContent = "Please enter both name and price";
                 status.classList.add("error");
             }
+            return;
+        }
+
+        // Message if medicine already exists
+
+        if (medicineExists(name)) {
+                status.textContent = "This medicine already exists!";
+                status.classList.add("error");
             return;
         }
 
