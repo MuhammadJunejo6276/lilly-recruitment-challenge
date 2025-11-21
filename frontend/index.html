@@ -21,9 +21,6 @@
         <main class="container main-content">
             <div class="content-grid">
                 <div class="forms-section">
-
-                    <!-- CRUD operations ( Create, Update , Delete ) -->
-
                     <section class="card card-form">
                         <div class="card-header">
                             <h2>Add New Medicine</h2>
@@ -57,7 +54,7 @@
                                 <label for="update-price">New price (£)</label>
                                 <input type="number" id="update-price" name="price" step="0.01" min="0" placeholder="e.g. 12.50" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Update price</button>
+                            <button type="submit" class="btn btn-secondary">Update price</button>
                             <div id="update-status" class="status-message"></div>
                         </form>
                     </section>
@@ -72,48 +69,39 @@
                                 <label for="delete-name">Medicine name</label>
                                 <input type="text" id="delete-name" name="name" placeholder="Exact name as in inventory" required>
                             </div>
-                            <button type="submit" class="btn btn-primary">Delete medicine</button>
+                            <button type="submit" class="btn btn-danger">Delete medicine</button>
                             <div id="delete-status" class="status-message"></div>
                         </form>
                     </section>
+                </div>
 
+                <!-- Inventory display and Average -->
 
-                    <!-- Medicines Display -->
-
-                    <div class="medicines-section">
-                        <section class="card card-inventory">
-                            <div class="card-header card-header-row">
-                                <div>
-                                    <h2>Medicine Inventory</h2>
-                                    <p class="card-subtitle">All current medicines with prices</p>
-                                </div>
+                <div class="medicines-section">
+                    <section class="card card-inventory">
+                        <div class="card-header card-header-row">
+                            <div>
+                                <h2>Medicine inventory</h2>
+                                <p class="card-subtitle">All current medicines with prices and validation.</p>
                             </div>
-                            <div id="medicines-container" class="medicines-grid">
-                                <p class="placeholder-text">Loading medicines...!</p>
-                            </div>
-                        </section>
-
-
-
-                        <!-- Average price      OPTIONAL OBJECTIVE -->
-
-                        <section class="card card-form">
-                            <div class="card-header">
-                                <h2>Average Price</h2>
-                                <p class="card-subtitle">Quick snapshot of overall pricing</p>
-                            </div>
-                            <div class="avg-block">
-                                <button id="avg-btn" class="btn btn-neutal">Calculate the average price</button>
-                                <div id="avg-result" class="status status-inline"></div>
-                            </div>
-                        </section>
-
-                    </div>
-
+                        </div>
+                        <div id="medicines-container" class="medicines-grid">
+                            <p class="placeholder-text">Loading medicines...</p>
+                        </div>
+                    </section>
+                    <section class="card card-form">
+                        <div class="card-header">
+                            <h2>Average Price</h2>
+                            <p class="card-subtitle">Quick snapshot of overall pricing.</p>
+                        </div>
+                        <div class="avg-block">
+                            <button id="avg-btn" class="btn btn-neutral">Calculate average price</button>
+                            <div id="avg-result" class="status status-inline"></div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </main>
-
     </div>
 
 
