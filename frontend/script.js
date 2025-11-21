@@ -256,3 +256,50 @@ function setupDeleteForm() {
     }
   });
 }
+
+function setupForms() {
+    setupAverageButton();
+}
+
+function setupAverageButton() {
+    const btn = document.getElementById("avg-btn");
+    const result = document.getElementById("avg-result");
+    if (!btn) return;
+
+    btn.addEventListener("click", async () => {
+        if (result) {
+            result.textContent = "Calculating average...!";
+            result.className = "status";
+        }
+
+        try {
+            const res = await fetch  (`${BASE_URL}/medicines-average-price`);
+            if (!res.ok) {
+                throw new Error(`HTTP error ${res.status}`);
+            }
+            const data = await res.json();
+
+            if (!data || data.average_price === null) {
+                if (result) {
+                    result.textContent = data.message || "No valid prices available.";
+                    result.classList.add("error");
+                }
+                return;
+            }
+
+            if (result) {
+                result.textContent = `Average price: £${data.average_price.toFixed(
+                    2
+                )} (based on ${data.count} medicines)`;
+                result.classList.add("success");
+            }
+        }   catch (err) {
+            console.error("Error fetching average price.")
+            if (result) {
+                result.textContent = "Failed to fetch average price.";
+                result.classList.add("error");
+            }
+        }
+    });
+
+}
