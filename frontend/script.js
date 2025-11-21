@@ -1,4 +1,4 @@
-const BASE_URL_URL = "http://localhost:8000";
+const BASE_URL = "http://localhost:8000";
 
 document.addEventListener("DOMContentLoaded", () => {
     fetchMedicines();
@@ -11,7 +11,7 @@ async function fetchMedicines() {
     const container = document.getElementById("medicines-container");
     
     try{
-        const res = await fetch(`${BASE_URL_URL}/medicines`);
+        const res = await fetch(`${BASE_URL}/medicines`);
         if(!res.ok) {
             throw new Error(`HTTP error ${res.status}`);
         }
@@ -118,7 +118,7 @@ function setupCreateForm() {
         formData.append("price", priceValue);
         
         try {
-            const res = await fetch(`${BASE_URL_URL}/create`, {
+            const res = await fetch(`${BASE_URL}/create`, {
                 method:     "POST",
                 body: formData,
             });
@@ -141,4 +141,118 @@ function setupCreateForm() {
             }
         }
     });
+}
+
+function setupUpdateForm() {
+  const form = document.getElementById("update-form");
+  const status = document.getElementById("update-status");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (status) {
+      status.textContent = "Updating...";
+      status.className = "status";
+    }
+
+    const nameInput = document.getElementById("update-name");
+    const priceInput = document.getElementById("update-price");
+
+    const name = nameInput.value.trim();
+    const priceValue = priceInput.value.trim();
+
+    if (!name || !priceValue) {
+      if (status) {
+        status.textContent = "Please enter both name and new price.";
+        status.classList.add("error");
+      }
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", priceValue);
+
+    try {
+      const res = await fetch(`${BASE_URL}/update`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        const msg = data.error || `HTTP error ${res.status}`;
+        throw new Error(msg);
+      }
+
+      if (status) {
+        status.textContent = "Medicine updated successfully!";
+        status.classList.add("success");
+      }
+      form.reset();
+      fetchMedicines();
+    } catch (err) {
+      console.error("Error updating medicine:", err);
+      if (status) {
+        status.textContent = "Failed to update medicine (check the name).";
+        status.classList.add("error");
+      }
+    }
+  });
+}
+
+function setupDeleteForm() {
+  const form = document.getElementById("delete-form");
+  const status = document.getElementById("delete-status");
+  if (!form) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (status) {
+      status.textContent = "Deleting...";
+      status.className = "status";
+    }
+
+    const nameInput = document.getElementById("delete-name");
+    const name = nameInput.value.trim();
+
+    if (!name) {
+      if (status) {
+        status.textContent = "Please enter a medicine name.";
+        status.classList.add("error");
+      }
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+
+    try {
+      const res = await fetch(`${BASE_URL}/delete`, {
+        method: "DELETE",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        const msg = data.error || `HTTP error ${res.status}`;
+        throw new Error(msg);
+      }
+
+      if (status) {
+        status.textContent = "Medicine deleted successfully!";
+        status.classList.add("success");
+      }
+      form.reset();
+      fetchMedicines();
+    } catch (err) {
+      console.error("Error deleting medicine:", err);
+      if (status) {
+        status.textContent = "Failed to delete medicine (check the name).";
+        status.classList.add("error");
+      }
+    }
+  });
 }
