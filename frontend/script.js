@@ -84,6 +84,7 @@ function setupForms() {
     setupCreateForm();
     setupUpdateForm();
     setupDeleteForm();
+    setupAverageButton();
 }
 
 
@@ -255,10 +256,6 @@ function setupDeleteForm() {
       }
     }
   });
-}
-
-function setupForms() {
-    setupAverageButton();
 }
 
 function setupAverageButton() {
