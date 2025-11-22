@@ -240,3 +240,25 @@ header p {
     font-size: 0.85rem;
     color: #9ca3af;
 }
+
+.search-sort-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.search-sort-bar input,
+.search-sort-bar select {
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #f9fafb;
+}
+
+.search-sort-bar input:focus,
+.search-sort-bar select:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+}

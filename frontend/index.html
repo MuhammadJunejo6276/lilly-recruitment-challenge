@@ -82,7 +82,17 @@
                         <div class="card-header card-header-row">
                             <div>
                                 <h2>Medicine inventory</h2>
-                                <p class="card-subtitle">All current medicines with prices and validation.</p>
+                                <p class="card-subtitle">All current medicines with prices.</p>
+                            </div>
+                            <div class="search-sort-bar">
+                                <input type="text" id="search-input" placeholder="Search medicine..." />
+                                <select id="sort-select">
+                                    <option value="">Sort by</option>
+                                    <option value="name-asc">Name: A → Z</option>
+                                    <option value="name-desc">Name: Z → A</option>
+                                    <option value="price-asc">Price: Low → High</option>
+                                    <option value="price-desc">Price: High → Low</option>
+                                </select>
                             </div>
                         </div>
                         <div id="medicines-container" class="medicines-grid">

@@ -19,7 +19,8 @@ async function fetchMedicines() {
         const data = await res.json();
         const medicines = Array.isArray(data.medicines) ? data.medicines : [];
 
-        renderMedicines(medicines);
+        allMedicines = medicines;
+        applyFilters();
     } catch (err) {
         console.error("Error fetching medicines:", err);
         if (container) {
@@ -27,6 +28,33 @@ async function fetchMedicines() {
             '<p class="status error">Failed to load medicines. Please try again later.</p>';
         }
     }
+}
+
+let allMedicines = [];
+
+function applyFilters() {
+    let filtered = [...allMedicines];
+
+    const searchValue = document.getElementById("search-input").value.toLowerCase();
+    const sortValue = document.getElementById("sort-select").value;
+
+    if (searchValue) {
+        filtered = filtered.filter(med =>
+            med.name.toLowerCase().includes(searchValue)
+        );
+    }
+
+    if (sortValue === "name-asc") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortValue === "name-desc") {
+        filtered.sort((a, b) => b.name.localeCompare(a.name));
+    } else if (sortValue === "price-asc") {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (sortValue === "price-desc") {
+        filtered.sort((a, b) => b.price - a.price);
+    }
+
+    renderMedicines(filtered);
 }
 
 function renderMedicines(medicines) {
@@ -322,3 +350,6 @@ function setupAverageButton() {
     });
 
 }
+
+document.getElementById("search-input").addEventListener("input", applyFilters);
+document.getElementById("sort-select").addEventListener("change", applyFilters);
